@@ -43,11 +43,18 @@ transaction = {
 TRANSACTION_FILE = "daily_transaction.json"
 
 # Cek apakah file transaksi sudah ada
+# Cek apakah file transaksi sudah ada dan memiliki konten yang valid
 if os.path.exists(TRANSACTION_FILE):
-    with open(TRANSACTION_FILE, "r") as f:
-        transactions = json.load(f)
+    try:
+        with open(TRANSACTION_FILE, "r") as f:
+            content = f.read().strip()  # Hilangkan whitespace kosong
+            transactions = json.loads(content) if content else []
+    except json.JSONDecodeError:
+        print("File JSON rusak, membuat ulang.")
+        transactions = []
 else:
     transactions = []
+
 
 # Tambahkan transaksi baru
 transactions.append(transaction)
