@@ -4,7 +4,7 @@ import requests
 import re
 from datetime import datetime
 
-GITHUB_REPO = "<owner>/<repo>"
+GITHUB_REPO = os.getenv("GITHUB_REPOSITORY")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json"}
 
