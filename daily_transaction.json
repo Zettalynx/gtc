@@ -28,5 +28,11 @@
         "to": "figuran04",
         "amount": 9.0,
         "timestamp": "2025-02-11T06:06:29Z"
+    },
+    {
+        "from": "figuran04",
+        "to": "Zettalynx",
+        "amount": 8.37,
+        "timestamp": "2025-02-11T06:08:46Z"
     }
 ]
