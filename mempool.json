@@ -12,5 +12,12 @@
         "amount": 2.0,
         "timestamp": "2025-02-11T14:37:30Z",
         "txid": "092f79dcbb3db658cf3a666c760004fd8787f41591db30a0734cf6a6ae7d7449"
+    },
+    {
+        "from": "github-action",
+        "to": "figuran04",
+        "amount": 3.8016,
+        "timestamp": "2025-02-11T14:40:21Z",
+        "txid": "bbf5f4da04d7af7444720423d14905c6d80faa54c1e7b492305cccd25e416235"
     }
 ]

@@ -1,14 +1,14 @@
 {
+    "figuran04": {
+        "balance": 5.8016000000000005,
+        "last_transaction": "2025-02-11T14:40:21Z"
+    },
+    "github-action": {
+        "balance": 33.854386,
+        "last_transaction": "2025-02-11T14:40:21Z"
+    },
     "Zettalynx": {
         "balance": 10.344014,
         "last_transaction": "2025-02-11T14:37:30Z"
-    },
-    "figuran04": {
-        "balance": 2.0,
-        "last_transaction": "2025-02-11T14:37:30Z"
-    },
-    "github-action": {
-        "balance": 37.655986,
-        "last_transaction": "2025-02-11T14:35:04Z"
     }
 }
