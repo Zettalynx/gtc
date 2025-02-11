@@ -1,9 +1,10 @@
+import hashlib
 import os
 import json
+import time
 import requests
 import re
 import random
-import hashlib
 from datetime import datetime
 
 GITHUB_REPO = os.getenv("GITHUB_REPOSITORY")
@@ -13,29 +14,29 @@ HEADERS = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.
 MEMPOOL_FILE = "mempool.json"
 BALANCES_FILE = "balances.json"
 
-# Pastikan file mempool dan balance ada
-def ensure_files_exist():
-    if not os.path.exists(BALANCES_FILE):
-        with open(BALANCES_FILE, "w") as f:
-            json.dump({"github-action": {"balance": 50, "last_transaction": None}}, f, indent=4)
-    if not os.path.exists(MEMPOOL_FILE):
-        with open(MEMPOOL_FILE, "w") as f:
-            json.dump([], f, indent=4)
-
 # Fungsi memuat saldo pengguna
 def load_balances():
-    with open(BALANCES_FILE, "r") as f:
-        return json.load(f)
+    if os.path.exists(BALANCES_FILE):
+        with open(BALANCES_FILE, "r") as f:
+            return json.load(f)
+    return {"github-action": {"balance": 50, "last_transaction": None}}
 
 # Fungsi menyimpan saldo pengguna
 def save_balances(balances):
+    sorted_balances = dict(sorted(
+        balances.items(),
+        key=lambda item: item[1]["last_transaction"] or "1970-01-01T00:00:00Z", 
+        reverse=True
+    ))
     with open(BALANCES_FILE, "w") as f:
-        json.dump(balances, f, indent=4)
+        json.dump(sorted_balances, f, indent=4)
 
 # Fungsi memuat transaksi dari mempool
 def load_mempool():
-    with open(MEMPOOL_FILE, "r") as f:
-        return json.load(f)
+    if os.path.exists(MEMPOOL_FILE):
+        with open(MEMPOOL_FILE, "r") as f:
+            return json.load(f)
+    return []
 
 # Fungsi menyimpan transaksi ke mempool
 def save_mempool(mempool):
@@ -51,7 +52,7 @@ def add_transaction(sender, recipient, amount):
     balances = load_balances()
     if sender == recipient or sender not in balances or balances[sender]["balance"] < amount:
         return None
-    timestamp = datetime.utcnow().isoformat()
+    timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     balances[sender]["balance"] -= amount
     balances[sender]["last_transaction"] = timestamp
     if recipient not in balances:
@@ -67,7 +68,6 @@ def add_transaction(sender, recipient, amount):
 
 # Fungsi membaca issue dari GitHub
 def process_issue():
-    ensure_files_exist()
     issues_url = f"https://api.github.com/repos/{GITHUB_REPO}/issues?state=open"
     response = requests.get(issues_url, headers=HEADERS)
     issues = response.json()
