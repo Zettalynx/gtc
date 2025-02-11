@@ -1,7 +1,9 @@
+import hashlib
 import os
 import json
 import requests
 import re
+import random
 from datetime import datetime
 
 GITHUB_REPO = os.getenv("GITHUB_REPOSITORY")
@@ -70,7 +72,10 @@ def process_issue():
         username = issue["user"]["login"]
         
         if title.startswith("Terima dari github-action"):
-            txid = add_transaction("github-action", username, 0.01)
+            balances = load_balances()
+            max_amount = balances["github-action"]["balance"] / 3
+            random_amount = round(random.uniform(0.001, max_amount), 6)
+            txid = add_transaction("github-action", username, random_amount)
         elif match := re.match(r"Kirim ([\d\.]+) ke ([\w-]+)", title):
             amount, recipient = float(match.group(1)), match.group(2)
             txid = add_transaction(username, recipient, amount)
