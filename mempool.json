@@ -5,5 +5,12 @@
         "amount": 12.344014,
         "timestamp": "2025-02-11T14:35:04Z",
         "txid": "757b18d3bc48169f63e89887c5db5bf89d167841e2feeb5d017a461fa495876f"
+    },
+    {
+        "from": "Zettalynx",
+        "to": "figuran04",
+        "amount": 2.0,
+        "timestamp": "2025-02-11T14:37:30Z",
+        "txid": "092f79dcbb3db658cf3a666c760004fd8787f41591db30a0734cf6a6ae7d7449"
     }
 ]
