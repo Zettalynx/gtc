@@ -19,7 +19,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests
+          pip install requests hashlib
 
       - name: Process Transaction
         run: python process_transaction.py
