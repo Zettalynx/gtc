@@ -1,0 +1,27 @@
+name: Process Transactions
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  process_transaction:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests
+
+      - name: Process Transaction
+        run: python process_transaction.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
